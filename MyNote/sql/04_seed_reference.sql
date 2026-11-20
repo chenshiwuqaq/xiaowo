@@ -1,0 +1,43 @@
+-- =====================================================================
+-- 小窝笔记（MyNote）—— 示例数据：参考文献库
+-- 本文件由 tools/gen_reference_seed.py 调用 OpenAlex / arXiv 官方接口生成，
+-- 作者、年份、DOI、被引次数均为接口返回的真实值；中文批注为产品侧解读。
+-- =====================================================================
+
+USE `newnote`;
+
+-- 幂等：重复执行本文件不会产生重复行
+TRUNCATE TABLE `mn_reference`;
+
+INSERT INTO `mn_reference` (`title`, `authors`, `journal`, `pub_year`, `doi`, `url`, `field`,
+                            `keywords`, `abstract`, `cited_count`)
+VALUES
+       ('Semi-Supervised Classification with Graph Convolutional Networks', 'Thomas N. Kipf, Max Welling', 'ICLR 2017', 2017, NULL, 'https://arxiv.org/abs/1609.02907', '图神经网络', '图卷积,谱方法,半监督,引文网络', '提出一阶切比雪夫近似的图卷积层，用对称归一化的邻接结构做半监督节点分类。', '7964'),
+       ('Inductive Representation Learning on Large Graphs', 'William L. Hamilton, Rex Ying, Jure Leskovec', 'NeurIPS 2017', 2017, NULL, 'https://arxiv.org/abs/1706.02216', '图神经网络', '归纳式,邻居采样,聚合函数,GraphSAGE', '以邻居采样与可学习聚合函数替代逐节点参数，使模型能对训练时未见的节点直接推断表征。', '4468'),
+       ('Graph Attention Networks', 'Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Liò, Yoshua Bengio', 'ICLR 2018', 2018, NULL, 'https://arxiv.org/abs/1710.10903', '图神经网络', '注意力,多头,加权聚合,GAT', '用掩码自注意力对邻居加权，多头机制稳定训练，同时保持归纳式推理能力。', '9095'),
+       ('How Powerful are Graph Neural Networks?', 'Keyulu Xu, Weihua Hu, Jure Leskovec, Stefanie Jegelka', 'ICLR 2019', 2019, NULL, 'https://arxiv.org/abs/1810.00826', '图神经网络理论', '表达能力,WL检验,聚合函数,GIN', '把 GNN 判别能力归约到 Weisfeiler-Lehman 图同构检验，指出 sum 聚合的必要性并提出 GIN。', '372'),
+       ('The Graph Neural Network Model', 'Franco Scarselli, M. Gori, Ah Chung Tsoi, Markus Hagenbuchner, Gabriele Monfardini', 'IEEE Transactions on Neural Networks', 2008, '10.1109/TNN.2008.2005605', NULL, '图神经网络', '早期模型,递推,节点映射', '图神经网络的最早系统形式：在节点上定义递推状态映射，以图微分方程描述收敛。', '9787'),
+       ('Neural Message Passing for Quantum Chemistry', 'Justin Gilmer, Samuel S. Schoenholz, Patrick F. Riley, Oriol Vinyals, George E. Dahl', 'ICML 2017', 2017, NULL, 'https://arxiv.org/abs/1704.01212', '消息传递', 'MPNN,分子性质,化学', '统一消息传递神经网络框架（MPNN），在分子性质预测上验证该范式的通用性。', '3833'),
+       ('Principal Neighbourhood Aggregation for Graph Nets', 'Gabriele Corso, Luca Cavalleri, Dominique Beaini, Pietro Liò, Petar Veličković', 'NeurIPS 2020', 2020, NULL, 'https://arxiv.org/abs/2004.05718', '图神经网络', '聚合,PNA,度缩放', '提出多聚合器与度缩放结合的 PNA，论证单一聚合算子限制了 GNN 的表达能力。', '242'),
+       ('Adaptive Universal Generalized PageRank Graph Neural Network', 'Eli Chien, Jianhao Peng, Pan Li, Olgica Milenkovic', 'ICLR 2021', 2021, NULL, 'https://arxiv.org/abs/2006.07988', '图神经网络', '图扩散,自适应传播,异配性', '把图扩散预处理与可学习传播策略结合，在异配图与大图上均优于固定深度卷积。', '92'),
+       ('Deep Residual Learning for Image Recognition', 'Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun', 'CVPR 2016', 2016, '10.1109/CVPR.2016.90', 'https://arxiv.org/abs/1512.03385', '深度学习', '残差连接,深层网络,ImageNet', '用恒等捷径连接解决深层网络的退化问题，使百层以上网络可训练。', '229327'),
+       ('Attention Is All You Need', 'Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin', 'NeurIPS 2017', 2017, NULL, 'https://arxiv.org/abs/1706.03762', '序列建模', 'Transformer,自注意力,位置编码', '完全以注意力构建序列转换模型，去除循环与卷积结构。', '26739'),
+       ('BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding', 'Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova', 'NAACL 2019', 2019, '10.18653/v1/N19-1423', 'https://arxiv.org/abs/1810.04805', '预训练语言模型', 'BERT,掩码预训练,双向编码', '以掩码语言模型做深度双向预训练，迁移下游任务时只需微调一个输出层。', '33976'),
+       ('Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks', 'Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis et al.', 'NeurIPS 2020', 2020, NULL, 'https://arxiv.org/abs/2005.11401', '检索增强生成', 'RAG,稠密检索,知识任务', '把参数化生成模型与非参数文档索引联合，是本产品「检索＋生成」推荐思路的来源。', '3076'),
+       ('Chain-of-Thought Prompting Elicits Reasoning in Large Language Models', 'Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed Chi, Quoc Le et al.', 'NeurIPS 2022', 2022, NULL, 'https://arxiv.org/abs/2201.11903', '大模型推理', '思维链,提示,推理', '在提示中给出中间推理步骤，可显著提升大模型在多步任务上的表现。', '4272'),
+       ('LoRA: Low-Rank Adaptation of Large Language Models', 'Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen', 'ICLR 2022', 2022, NULL, 'https://arxiv.org/abs/2106.09685', '模型微调', '低秩适配,参数高效微调', '只训练注入的低秩分解矩阵即可接近全量微调效果，大幅降低可训练参数量。', '2523'),
+       ('FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness', 'Tri Dao, Daniel Y. Fu, Stefano Ermon, Atri Rudra, Christopher Ré', 'NeurIPS 2022', 2022, NULL, 'https://arxiv.org/abs/2205.14135', '注意力优化', 'IO感知,精确注意力,显存', '通过分块与前向重计算减少注意力算子的显存读写，实现不近似加速。', '458'),
+       ('Adam: A Method for Stochastic Optimization', 'Diederik P. Kingma, Jimmy Ba', 'ICLR 2015', 2015, NULL, 'https://arxiv.org/abs/1412.6980', '优化方法', '自适应学习率,动量', '结合一阶与二阶动量的自适应优化器。', '83445'),
+       ('Decoupled Weight Decay Regularization', 'Ilya Loshchilov, Frank Hutter', 'ICLR 2019', 2019, NULL, 'https://arxiv.org/abs/1711.05101', '优化方法', 'AdamW,权重衰减', '指出 Adam 中 L2 正则与自适应缩放相互干扰，提出解耦权重衰减的 AdamW。', '9406'),
+       ('Efficient Estimation of Word Representations in Vector Space', 'Tomas Mikolov, Kai Chen, Greg Corrado, Jeffrey Dean', 'ICLR Workshop 2013', 2013, NULL, 'https://arxiv.org/abs/1301.3781', '词向量', 'word2vec,SGNS', '提出跳词与连续词袋两种高效词向量训练目标。', '25826'),
+       ('Glove: Global Vectors for Word Representation', 'Jeffrey Pennington, Richard Socher, Christopher D. Manning', 'EMNLP 2014', 2014, '10.3115/v1/D14-1162', NULL, '词向量', '共现矩阵,全局统计', '让词向量匹配全局共现概率的对数，兼得局部上下文与全局统计。', '34098'),
+       ('A Comprehensive Survey on Graph Neural Networks', 'Zonghan Wu, Shirui Pan, Fengwen Chen, Guodong Long, Chengqi Zhang, Philip S. Yu', 'IEEE TNNLS', 2019, '10.1109/TNNLS.2020.2978386', 'https://arxiv.org/abs/1901.00596', '综述', 'GNN,分类体系,时空图', '按卷积式与循环式给出 GNN 的统一分类框架。', '10169'),
+       ('Graph Neural Networks: A Review of Methods and Applications', 'Jie Zhou, Ganqu Cui, Shengding Hu, Zhengyan Zhang, Cheng Yang, Zhiyuan Liu, Lifeng Wang, Changcheng Li et al.', 'AI Open', 2018, '10.1016/j.aiopen.2021.01.001', 'https://arxiv.org/abs/1812.08434', '综述', 'GNN,应用,方法回顾', '从方法与应用两条线梳理早期 GNN 研究版图。', '5948'),
+       ('A Survey of Large Language Models', 'Wayne Xin Zhao, Kun Zhou, Junyi Li, Tianyi Tang, Xiaolei Wang, Yupeng Hou, Yingqian Min, Beichen Zhang et al.', 'Science China Information Sciences', 2023, '10.1007/s11432-023-3783-5', 'https://arxiv.org/abs/2303.18223', '大模型综述', 'LLM,预训练,对齐,评测', '系统总结大语言模型在预训练、适配使用与对齐评测上的技术栈。', '1557'),
+       ('Temporal Graph Networks for Deep Learning on Dynamic Graphs', 'Emanuele Rossi, Ben Chamberlain, Fabrizio Frasca, Davide Eynard, Federico Monti, Michael Bronstein', 'arXiv preprint', 2020, NULL, 'https://arxiv.org/abs/2006.10637', '动态图学习', 'TGN,时序记忆,事件流', '用节点记忆与双向时序编码处理事件流，是动态图建模的代表性框架。', '92'),
+       ('Neural Graph Collaborative Filtering', 'Xiang Wang, Xiangnan He, Meng Wang, Fuli Feng, Tat-Seng Chua', 'SIGIR 2020', 2020, '10.1145/3397271.3401079', 'https://arxiv.org/abs/1905.08108', '推荐系统', 'NGCF,图传播,协同过滤', '把用户-商品交互建模为图上的传播过程，取代内积打分范式。', '33'),
+       ('A Survey on Knowledge Graphs: Representation, Acquisition and Applications', 'Shaoxiong Ji, Shirui Pan, Erik Cambria, Pekka Marttinen, Philip S. Yu', 'IEEE TNNLS', 2020, NULL, 'https://arxiv.org/abs/2002.00388', '知识图谱', 'KG,表示学习,推理', '梳理知识图谱的表示、构建与应用三条主线。', '0'),
+       ('Language Models are Few-Shot Learners', 'Tom B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam et al.', 'NeurIPS 2020', 2020, NULL, 'https://arxiv.org/abs/2005.14165', '大模型', 'GPT-3,少样本,上下文学习', '规模增长带来上下文少样本学习能力，为「提示即功能」的写作助手提供基础。', '2963'),
+       ('Confronting a traumatic event: Toward an understanding of inhibition and disease.', 'James W. Pennebaker, Sandra K. Beall', 'Journal of Abnormal Psychology', 1986, '10.1037/0021-843X.95.3.274', NULL, '写作与心理', '表达性写作,身心健康,日记', '连续数日书写创伤经历可显著减少后续就医次数，是「写作即疗愈」的经典实证依据。', '1899'),
+       ('Dropout: A Simple Way to Prevent Neural Networks from Overfitting', 'Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, Ruslan Salakhutdinov', 'Journal of Machine Learning Research', 2014, NULL, 'https://jmlr.org/papers/v15/srivastava14a.html', '正则化', 'dropout,集成,过拟合', '训练时随机丢弃隐单元，等价于对指数级子网络做几何平均。', '0'),
+       ('Flow: The Psychology of Optimal Experience', 'Mihaly Csikszentmihalyi', 'Harper & Row（中译本《心流》）', 1990, NULL, NULL, '心流', '心流,最优体验,专注,沉浸', '提出挑战与技能动态平衡时的最优体验状态，可解释长时间书写的沉浸机制。', '0');

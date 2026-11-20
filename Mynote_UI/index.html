@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf4ec" />
+    <meta name="description" content="小窝笔记 · 私人知识与创作空间" />
+    <title>小窝笔记</title>
+    <style>
+      /* 首屏占位：等 JS 接管前先给出奶油底色，避免白屏一闪 */
+      html,
+      body {
+        margin: 0;
+        background: #faf4ec;
+      }
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font: 15px/1.6 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        color: #87736a;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="boot">正在点亮小窝的灯…</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

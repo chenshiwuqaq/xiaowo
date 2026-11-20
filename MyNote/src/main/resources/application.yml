@@ -1,0 +1,84 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: MyNote
+  datasource:
+    # 数据库口令支持环境变量覆盖，便于换机器部署时不把密码写死在仓库里
+    url: jdbc:mysql://localhost:3306/newnote?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYNOTE_DB_USER:root}
+    password: ${MYNOTE_DB_PASSWORD:20050702cj}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 15
+      connection-timeout: 30000
+  jpa:
+    # 表结构由 sql/01_schema.sql 维护，禁止 Hibernate 自动改表
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc:
+          batch_size: 30
+        time_zone: Asia/Shanghai
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 60MB
+  web:
+    resources:
+      add-mappings: true
+
+mynote:
+  jwt:
+    # 生产部署请通过环境变量覆盖；HS256 要求密钥不短于 32 字节
+    secret: ${MYNOTE_JWT_SECRET:mynote-dev-jwt-secret-key-please-change-in-production}
+    expire-hours: 168
+  crypto:
+    # API Key 落库前的 AES-GCM 密钥，同样建议用环境变量覆盖
+    aes-key: ${MYNOTE_AES_KEY:mynote-dev-aes-key-change-me-32bytes!!}
+  upload:
+    dir: ${MYNOTE_UPLOAD_DIR:./upload}
+    url-prefix: /upload
+    allowed-image: jpg,jpeg,png,gif,webp,bmp,svg
+    allowed-doc: md,markdown,txt
+  http:
+    # 自签名模型端点 / 公司代理（MITM）导致 PKIX 校验失败时置 true；默认 false
+    trust-all-certificates: true
+  ai:
+    connect-timeout-seconds: 15
+    read-timeout-seconds: 120
+    # 送给模型的上下文规模上限，防止长文一次性灌满
+    max-context-chars: 6000
+    max-sibling-notes: 6
+  weather:
+    geocoding-url: https://geocoding-api.open-meteo.com/v1/search
+    forecast-url: https://api.open-meteo.com/v1/forecast
+    cache-minutes: 30
+  scholar:
+    # 联网可用时用 OpenAlex 补充最新文献，取不到时自动退回本地文献库
+    enabled: true
+    base-url: https://api.openalex.org
+    mailto: mynote@example.com
+    max-results: 8
+    timeout-seconds: 10
+
+logging:
+  level:
+    root: info
+    org.example.mynote: debug
+    org.hibernate.SQL: warn

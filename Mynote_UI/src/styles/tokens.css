@@ -1,0 +1,136 @@
+/**
+ * 设计令牌（整个产品的视觉基线）
+ *
+ * 命名约定：
+ *   --brand-*   主色及其派生色，用户在「个人设置-外观」里只改 --brand-base，其余自动推导
+ *   --paper-*   纸面/卡片/边框，构成"奶油底 + 暖棕字"的底色层次
+ *   --ink-*     文字色阶
+ *   --r-*       圆角；--sp-* 间距；--sh-* 阴影
+ * 派生一律用 color-mix()，浏览器（Chrome 111+/Edge 111+）原生支持，
+ * 不需要预处理器，也不会因为主题切换而重算样式表。
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------- 主色：暖陶 ---------- */
+  --brand-base: #c06a46;
+  --brand-deep: color-mix(in srgb, var(--brand-base) 78%, #2b1a12);
+  --brand-hover: color-mix(in srgb, var(--brand-base) 88%, #000);
+  --brand-soft: color-mix(in srgb, var(--brand-base) 16%, #fffaf4);
+  --brand-soft-strong: color-mix(in srgb, var(--brand-base) 28%, #fff6ec);
+  --brand-line: color-mix(in srgb, var(--brand-base) 34%, #f0e2d4);
+  --brand-text: color-mix(in srgb, var(--brand-base) 62%, #4a2c1c);
+
+  /* ---------- 纸面 ---------- */
+  --paper-page: #faf4ec;
+  --paper-surface: color-mix(in srgb, #fffdf9 92%, var(--brand-base) 8%);
+  --paper-raised: color-mix(in srgb, #fffefb 88%, var(--brand-base) 12%);
+  --paper-muted: #f1e6d8;
+  --paper-line: #e8dac8;
+  --paper-line-soft: color-mix(in srgb, #e8dac8 60%, transparent);
+
+  /* ---------- 文字 ---------- */
+  --ink: #3a2e28;
+  --ink-2: #5a4a40;
+  --ink-3: #8b7a6d;
+  --ink-4: #b5a397;
+  --ink-inverse: #fff8f0;
+
+  /* ---------- 语义色（低饱和，只用于状态） ---------- */
+  --ok: #5fa98a;
+  --warn: #dfa43e;
+  --danger: #cf6154;
+  --info: var(--brand-base);
+  --peach: #e3a878;
+
+  /* ---------- 尺寸 ---------- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  --sh-1: 0 1px 2px rgba(80, 56, 40, 0.06);
+  --sh-2: 0 4px 14px rgba(80, 56, 40, 0.08);
+  --sh-3: 0 10px 30px rgba(80, 56, 40, 0.1);
+  --sh-brand: 0 6px 20px color-mix(in srgb, var(--brand-base) 26%, transparent);
+
+  /* ---------- 字体 ---------- */
+  --font-sans: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', -apple-system, 'Segoe UI', sans-serif;
+  --font-round: 'Yuanti SC', 'YouYuan', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'JetBrains Mono', 'Courier New', monospace;
+  --font-serif: 'Songti SC', 'SimSun', 'Noto Serif CJK SC', serif;
+
+  /* ---------- 编辑器正文字号（用户可设 12~24） ---------- */
+  --editor-font-size: 16px;
+
+  /* ---------- 动效时长 ---------- */
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 600ms;
+  --ease: cubic-bezier(0.22, 0.68, 0.36, 1);
+
+  /* Element Plus 主题对齐到我们的令牌 */
+  --el-color-primary: var(--brand-base);
+  --el-color-primary-light-3: color-mix(in srgb, var(--brand-base) 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, var(--brand-base) 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, var(--brand-base) 30%, #fff);
+  --el-color-primary-light-8: color-mix(in srgb, var(--brand-base) 22%, #fff);
+  --el-color-primary-light-9: var(--brand-soft);
+  --el-color-primary-dark-2: var(--brand-hover);
+  --el-border-radius-base: var(--r-md);
+  --el-font-family: var(--font-sans);
+  --el-text-color-regular: var(--ink-2);
+  --el-text-color-primary: var(--ink);
+  --el-bg-color: var(--paper-surface);
+  --el-bg-color-overlay: var(--paper-raised);
+  --el-border-color: var(--paper-line);
+  --el-border-color-light: var(--paper-line-soft);
+}
+
+/* 深色模式：保留暖色倾向，不做纯黑，避免"深夜写字"时刺眼 */
+html[data-theme='dark'] {
+  --paper-page: #241d19;
+  --paper-surface: #2c2521;
+  --paper-raised: #352d28;
+  --paper-muted: #3b322c;
+  --paper-line: #473c34;
+  --paper-line-soft: color-mix(in srgb, #473c34 60%, transparent);
+  --ink: #f0e6da;
+  --ink-2: #d6c8bb;
+  --ink-3: #a8968a;
+  --ink-4: #7d6c62;
+  --ink-inverse: #241d19;
+  --brand-soft: color-mix(in srgb, var(--brand-base) 26%, #2c2521);
+  --brand-soft-strong: color-mix(in srgb, var(--brand-base) 36%, #2c2521);
+  --brand-text: color-mix(in srgb, var(--brand-base) 60%, #f5e6d8);
+  --sh-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sh-2: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --sh-3: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --el-bg-color: var(--paper-surface);
+  --el-bg-color-overlay: var(--paper-raised);
+  --el-text-color-primary: var(--ink);
+  --el-text-color-regular: var(--ink-2);
+  --el-border-color: var(--paper-line);
+  --el-border-color-light: var(--paper-line-soft);
+  --el-fill-color-blank: var(--paper-surface);
+  color-scheme: dark;
+}
+
+/* 主题切换时给一层柔和过渡，不闪跳 */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color var(--dur-base) var(--ease),
+    border-color var(--dur-base) var(--ease),
+    color var(--dur-base) var(--ease);
+}
